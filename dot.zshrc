@@ -208,4 +208,7 @@ if [[ -s $autofuzsh ]] ; then
     bindkey -M afu "^M" afu+cancel-and-accept-line
 fi
 
+# rbenv
+if which rbenv > /dev/null; then eval "$(rbenv init -)"
+
 cd ~
