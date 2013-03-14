@@ -191,6 +191,6 @@ if [[ -s $autofuzsh ]] ; then
 fi
 
 # rbenv
-if which rbenv > /dev/null; then eval "$(rbenv init -)"
+if which rbenv > /dev/null; then eval "$(rbenv init -)" ; fi
 
 cd ~
