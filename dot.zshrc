@@ -132,24 +132,6 @@ alias gd='dirs -v; echo -n "select number: "; read newdir; cd +"$newdir"'
 alias sjis2euc='nkf -SXZeLu'
 alias cleanelc='rm `find ~/.emacs.d -name "*.elc"`'
 
-alias sshhpcat='ssh -C -R 12321:127.0.0.1:2401 hpcat.you-group.com'
-alias sshbinmlm='ssh -C -R 12321:127.0.0.1:2401 ura@211.4.228.10'
-alias sshgpnk='ssh -C -R 12321:127.0.0.1:2401 flat4.unixmagic.net'
-alias sshteria='ssh -C -R 12321:127.0.0.1:2401 master.teria.com'
-alias sshdrop='env TERM=xterm-color ssh -C drop@neon.excite.co.jp'
-alias sshfitness='env TERM=xterm-color ssh -C fitness@neon.excite.co.jp'
-alias sshkobukuro='env TERM=xterm-color ssh -C teamkobukuro@neon.excite.co.jp'
-
-alias errhpcat='tail -n 500 -F ~/project/hpcat/log/error.log |eruby_logdump /home/tura/project/hpcat/'
-alias debughpcat='tail -F ~/project/hpcat/debug.log'
-
-alias errbinmlm='tail -n 500 -F ~/project/binmlm/log/error.log |eruby_logdump /home/tura/project/binmlm/'
-alias debugbinmlm='tail -F ~/project/binmlm/debug.log'
-
-alias pgais='psql83 -U mt2004002 1mindiag'
-# alias svn='LC_MESSAGES=ja_JP.eucJP svn'
-
-
 alias e='emacsclient -t'
 # ee () {emacs $* &}
 # if [ "$IN_SCREEN" = "1" ] ; then
