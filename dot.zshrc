@@ -130,7 +130,7 @@ alias -g L='|less'
 alias -g G='|grep'
 alias gd='dirs -v; echo -n "select number: "; read newdir; cd +"$newdir"'
 alias sjis2euc='nkf -SXZeLu'
-alias cleanelc='rm ~/.emacs.elc; rm `find ~/.emacs -name "*.elc"`'
+alias cleanelc='rm `find ~/.emacs.d -name "*.elc"`'
 
 alias sshhpcat='ssh -C -R 12321:127.0.0.1:2401 hpcat.you-group.com'
 alias sshbinmlm='ssh -C -R 12321:127.0.0.1:2401 ura@211.4.228.10'
