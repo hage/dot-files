@@ -3,7 +3,10 @@ export TZ=JST-9
 export LANG=ja_JP.UTF-8
 export LC_MESSAGES=C
 export LC_TIME=C
-export RUBYLIB=$HOME/lib/ruby
+
+if [ -e ~/lib/ruby ]; then
+   export RUBYLIB=~/lib/ruby
+fi
 
 # PROMPT='%B%n@%m[%?]%~%b%# '
 # RPROMPT='%B%~%b'
@@ -14,12 +17,7 @@ if [ `hostname` = "iulius.hage.teria.com" ]; then
     export PGDATA=$POSTGRES_HOME/data
     export PATH=$PATH:/sbin:/usr/sbin
     export CVSROOT=:pserver:localhost:/usr/home/cvsroot
-    export RUBYLIB=$RUBYLIB:/home/tura/lib/site_ruby/1.8/prime/
     export REFE_DATA_DIR=/usr/local/share/refe
-fi
-if [ `hostname` = "master.teria.com" ]; then
-    export PATH=$PATH:/home/tura/innami/bin
-    export RUBYLIB=$RUBYLIB:/home/tura/innami/bin/lib
 fi
 
 if [ `hostname` = "curry.local" ]; then

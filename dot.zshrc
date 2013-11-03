@@ -11,6 +11,46 @@ else
     [ -f /usr/games/fortune ] && fortune ~/doc/2ch-fortune
 fi
 
+
+
+
+################ gitのブランチ名をコマンドラインに表示
+# ${fg[...]} や $reset_color をロード
+autoload -U colors; colors
+
+function rprompt-git-current-branch {
+        local name st color
+
+        if [[ "$PWD" =~ '/\.git(/.*)?$' ]]; then
+                return
+        fi
+        name=$(basename "`git symbolic-ref HEAD 2> /dev/null`")
+        if [[ -z $name ]]; then
+                return
+        fi
+        st=`git status 2> /dev/null`
+        if [[ -n `echo "$st" | grep "^nothing to"` ]]; then
+                color=${fg[green]}
+        elif [[ -n `echo "$st" | grep "^nothing added"` ]]; then
+                color=${fg[yellow]}
+        elif [[ -n `echo "$st" | grep "^# Untracked"` ]]; then
+                color=${fg_bold[red]}
+        else
+                color=${fg[red]}
+        fi
+
+        # %{...%} は囲まれた文字列がエスケープシーケンスであることを明示する
+        # これをしないと右プロンプトの位置がずれる
+        echo "%{$color%}$name%{$reset_color%} "
+}
+
+# プロンプトが表示されるたびにプロンプト文字列を評価、置換する
+setopt prompt_subst
+
+# RPROMPT='[`rprompt-git-current-branch`%~]'
+################ gitのブランチ名をコマンドラインに表示 ここまで
+
+
 umask 022
 setopt NOCLOBBER
 setopt pushd_ignore_dups
@@ -25,7 +65,7 @@ unsetopt promptcr
 limit coredumpsize 0
 setopt prompt_subst
 PROMPT='%{[32m%}${WINDOW:+"$WINDOW:"}%n@%B%m%b(%?)%{[m%}%B%#%b '
-RPROMPT='%{[32m%}%~%b%{[m%}'
+RPROMPT='[`rprompt-git-current-branch`%{[32m%}%~%b%{[m%}]'
 WORDCHARS=''
 
 if [ $EMACS ]; then
@@ -131,6 +171,7 @@ alias -g G='|grep'
 alias gd='dirs -v; echo -n "select number: "; read newdir; cd +"$newdir"'
 alias sjis2euc='nkf -SXZeLu'
 alias cleanelc='rm `find ~/.emacs.d -name "*.elc"`'
+alias bx='bundle exec'
 
 alias e='emacsclient -t'
 # ee () {emacs $* &}
@@ -162,12 +203,8 @@ export LSCOLORS=dxfxcxdxbxegedabagacad
 export GIT_PAGER='less -RF'
 export LANG=ja_JP.UTF-8
 
-# homebrewを優先
-export PATH=~/bin:/usr/local/bin:$PATH
 
-# rvm
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
-
+################################################################
 # auto-fu.zsh
 #   cd ~/bin && git clone https://github.com/hchbaw/auto-fu.zsh.git
 autofuzsh=$HOME/bin/auto-fu.zsh/auto-fu.zsh
@@ -186,8 +223,8 @@ if [[ -s $autofuzsh ]] ; then
         ((afu_in_p == 1)) && { afu_in_p=0; BUFFER="$buffer_cur" }
         zle afu+accept-line
     }
-    zle -N afu+cancel-and-accept-line
-    bindkey -M afu "^M" afu+cancel-and-accept-line
+    zle -N afu+cancel-and-accept-lineaut
+    # bindkey -M afu "^M" afu+cancel-and-accept-line
 fi
 
 # rbenv
