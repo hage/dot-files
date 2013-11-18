@@ -121,10 +121,11 @@ cdpath=(~ ~/project)
 
 autoload -U compinit
 compinit
-# autoload predict-on
-# predict-on
 
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+# a-f[TAB] -> auto-fu  see http://gihyo.jp/dev/serial/01/zsh-book/0005
+# zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' '+m:{A-Z}={a-z}'
+
 zstyle ':completion:*:default' menu select=1
 # command for process lists, the local web server details and host completion
 zstyle ':completion:*:processes' command 'ps -o pid,s,nice,stime,args'
@@ -213,7 +214,8 @@ if [[ -s $autofuzsh ]] ; then
 
     zstyle ':auto-fu:highlight' input bold
     zstyle ':auto-fu:highlight' completion fg=black,bold
-    zstyle ':auto-fu:var' postdisplay $'\n-azfu-'
+    # zstyle ':auto-fu:var' postdisplay $'\n-azfu-'
+    zstyle ':auto-fu:var' postdisplay $'' # -azfu-と表示させない
 
     zle-line-init () { auto-fu-init; }
     zle -N zle-line-init
@@ -223,11 +225,12 @@ if [[ -s $autofuzsh ]] ; then
         ((afu_in_p == 1)) && { afu_in_p=0; BUFFER="$buffer_cur" }
         zle afu+accept-line
     }
-    zle -N afu+cancel-and-accept-lineaut
-    # bindkey -M afu "^M" afu+cancel-and-accept-line
+    zle -N afu+cancel-and-accept-line
+    bindkey -M afu "^M" afu+cancel-and-accept-line
 fi
 
 # rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)" ; fi
 
 cd ~
+echo
