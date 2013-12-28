@@ -3,7 +3,7 @@
 	email = ura@spirals.co.jp
 [core]
         autocrlf=false
-	excludesfile = /Users/tura/.gitignore
+	excludesfile = ~/.gitignore
 
 [color]
   branch = auto
