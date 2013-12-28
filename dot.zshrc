@@ -234,3 +234,4 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)" ; fi
 
 cd ~
 echo
+clear
