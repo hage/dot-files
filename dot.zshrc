@@ -174,7 +174,6 @@ alias sjis2euc='nkf -SXZeLu'
 alias cleanelc='rm `find ~/.emacs.d -name "*.elc"`'
 alias bx='bundle exec'
 
-alias e='emacsclient -t'
 # ee () {emacs $* &}
 # if [ "$IN_SCREEN" = "1" ] ; then
 #     alias e='screen -t "emacs `pwd`" env TERM=xterm-screen emacs -nw'
@@ -204,6 +203,12 @@ export LSCOLORS=dxfxcxdxbxegedabagacad
 export GIT_PAGER='less -RF'
 export LANG=ja_JP.UTF-8
 
+# ソース表示に色づけ
+# brew install source-highlight をすること
+if which source-highlight > /dev/null ; then
+    export LESS="$LESS -R"
+    export LESSOPEN='| src-hilite-lesspipe.sh %s'
+fi
 
 ################################################################
 # auto-fu.zsh
@@ -235,3 +240,4 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)" ; fi
 cd ~
 echo
 clear
+stty -ixon

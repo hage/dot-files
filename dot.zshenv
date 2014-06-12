@@ -26,7 +26,7 @@ fi
 
 if [ `uname` = "Darwin" ]; then
     # PATHの頭に挿入する文字列
-    mypath=
+    mypath=$HOME/bin
     if [ `hostname` = 'caius.local' ]; then
 	mypath=/Users/tura/opt/bin:/Users/tura/bin:/Users/tura/bin/sync:/opt/local/bin:/opt/local/sbin # MacPorts用
     elif [ `hostname` = "curry.local"  ]; then
@@ -47,3 +47,5 @@ fi
 if [ -e ~/lib/tex ]; then
     export TEXINPUTS=.:~/lib/tex//:
 fi
+
+export OMAKEPATH=~/lib/makefile:/usr/local/lib/omake:.
