@@ -214,26 +214,27 @@ fi
 ################################################################
 # auto-fu.zsh
 #   cd ~/bin && git clone https://github.com/hchbaw/auto-fu.zsh.git
-autofuzsh=$HOME/bin/auto-fu.zsh/auto-fu.zsh
-if [[ -s $autofuzsh ]] ; then
-    source $autofuzsh
+# autofuzsh=$HOME/bin/auto-fu.zsh/auto-fu.zsh
+# if [[ -s $autofuzsh ]] ; then
+#     source $autofuzsh
 
-    zstyle ':auto-fu:highlight' input bold
-    zstyle ':auto-fu:highlight' completion fg=black,bold
-    # zstyle ':auto-fu:var' postdisplay $'\n-azfu-'
-    zstyle ':auto-fu:var' postdisplay $'' # -azfu-と表示させない
+#     zstyle ':completion:*' completer _oldlist _complete
+#     zstyle ':auto-fu:highlight' input bold
+#     zstyle ':auto-fu:highlight' completion fg=black,bold
+#     # zstyle ':auto-fu:var' postdisplay $'\n-azfu-'
+#     zstyle ':auto-fu:var' postdisplay $'' # -azfu-と表示させない
 
-    zle-line-init () { auto-fu-init; }
-    zle -N zle-line-init
-# auto-fuをカスタマイズする。
-## Enterを押したときは自動補完された部分を利用しない。
-    afu+cancel-and-accept-line() {
-        ((afu_in_p == 1)) && { afu_in_p=0; BUFFER="$buffer_cur" }
-        zle afu+accept-line
-    }
-    zle -N afu+cancel-and-accept-line
-    bindkey -M afu "^M" afu+cancel-and-accept-line
-fi
+#     zle-line-init () { auto-fu-init; }
+#     zle -N zle-line-init
+# # auto-fuをカスタマイズする。
+# ## Enterを押したときは自動補完された部分を利用しない。
+#     afu+cancel-and-accept-line() {
+#         ((afu_in_p == 1)) && { afu_in_p=0; BUFFER="$buffer_cur" }
+#         zle afu+accept-line
+#     }
+#     zle -N afu+cancel-and-accept-line
+#     bindkey -M afu "^M" afu+cancel-and-accept-line
+# fi
 
 # rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)" ; fi
