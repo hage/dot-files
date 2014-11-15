@@ -1,3 +1,5 @@
+# -*- mode: shell-script -*-
+
 export TZ=JST-9
 #export LANG=ja_JP.eucJP
 export LANG=ja_JP.UTF-8

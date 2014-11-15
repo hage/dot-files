@@ -1,3 +1,4 @@
+# -*- mode:shell-script -*-
 if [ "$IN_SCREEN" = "1" -o "$TERM" = "screen" ]; then
     eval `tset -s xterm-256color`
     export IN_SCREEN=1
