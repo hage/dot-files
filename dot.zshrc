@@ -175,6 +175,13 @@ alias sjis2euc='nkf -SXZeLu'
 alias cleanelc='rm `find ~/.emacs.d -name "*.elc"`'
 alias bx='bundle exec'
 
+e () {
+    emacsclient -a emacs -n $*
+    if [ $TMUX ] ; then
+	tmux find-window -N 'emacs-'
+    fi
+}
+
 # ee () {emacs $* &}
 # if [ "$IN_SCREEN" = "1" ] ; then
 #     alias e='screen -t "emacs `pwd`" env TERM=xterm-screen emacs -nw'
