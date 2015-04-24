@@ -175,12 +175,11 @@ alias sjis2euc='nkf -SXZeLu'
 alias cleanelc='rm `find ~/.emacs.d -name "*.elc"`'
 alias bx='bundle exec'
 
-e () {
-    emacsclient -a emacs -n $*
-    if [ $TMUX ] ; then
-	tmux find-window -N 'emacs-'
-    fi
+function mdcd {
+    mkdir -p $*
+    cd $*
 }
+
 
 # ee () {emacs $* &}
 # if [ "$IN_SCREEN" = "1" ] ; then
@@ -217,6 +216,50 @@ if which source-highlight > /dev/null ; then
     export LESS="$LESS -R"
     export LESSOPEN='| src-hilite-lesspipe.sh %s'
 fi
+
+
+#### Emacs functions
+tmuxemacs () {
+    if [ $TMUX ] ; then
+	tmux find-window -N 'emacs-'
+    fi
+}
+
+e () {
+    emacsclient -a emacs -n $*
+    tmuxemacs
+}
+
+## Invoke the ``dired'' of current working directory in Emacs buffer.
+function eff () {
+    if [ $1 ]; then
+	dir="${1:A}/"
+    else
+	dir="$PWD/"
+    fi
+    tmuxemacs
+    emacsclient -ne "(helm-find-files-1 \"$dir\")"
+}
+
+## Chdir to the ``default-directory'' of currently opened in Emacs buffer.
+function cde () {
+        EMACS_CWD=`emacsclient -e "
+     (expand-file-name
+      (with-current-buffer
+          (if (featurep 'elscreen)
+              (let* ((frame-confs (elscreen-get-frame-confs (selected-frame)))
+                     (num (nth 1 (assoc 'screen-history frame-confs)))
+                     (cur-window-conf (cadr (assoc num (assoc 'screen-property frame-confs))))
+                     (marker (nth 2 cur-window-conf)))
+                (marker-buffer marker))
+            (nth 1
+                 (assoc 'buffer-list
+                        (nth 1 (nth 1 (current-frame-configuration))))))
+        default-directory))" | sed 's/^"\(.*\)"$/\1/'`
+
+        echo "chdir to $EMACS_CWD"
+        cd "$EMACS_CWD"
+}
 
 ################################################################
 # auto-fu.zsh
