@@ -12,7 +12,7 @@ else
     [ -f /usr/games/fortune ] && fortune ~/doc/2ch-fortune
 fi
 
-
+export GUARD_GEM_SILENCE_DEPRECATIONS=1
 
 
 ################ gitのブランチ名をコマンドラインに表示
