@@ -205,7 +205,7 @@ LS_COLORS='no=00:fi=00:di=00;33:ln=01;35:pi=40;33:so=01;35:do=01;35:bd=40;33;01:
 export LS_COLORS
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
-export LSCOLORS=dxfxcxdxbxegedabagacad
+export LSCOLORS=dxfxcxdxgxegedabagacad
 
 export GIT_PAGER='less -RF'
 export LANG=ja_JP.UTF-8
