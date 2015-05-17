@@ -175,7 +175,7 @@ alias sjis2euc='nkf -SXZeLu'
 alias cleanelc='rm `find ~/.emacs.d -name "*.elc"`'
 alias bx='bundle exec'
 
-function mdcd {
+function mkdirr {
     mkdir -p $*
     cd $*
 }
