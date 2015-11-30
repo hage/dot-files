@@ -28,12 +28,7 @@ fi
 
 if [ `uname` = "Darwin" ]; then
     # PATHの頭に挿入する文字列
-    mypath=$HOME/bin
-    if [ `hostname` = 'caius.local' ]; then
-	mypath=/Users/tura/opt/bin:/Users/tura/bin:/Users/tura/bin/sync:/opt/local/bin:/opt/local/sbin # MacPorts用
-    elif [ `hostname` = "curry.local"  ]; then
-	# mypath=/Applications/android-sdk-mac_86/tools
-    fi
+    mypath=$HOME/bin:$HOME/opt/bin:/usr/local/bin
     if [ -e /Applications/UpTeX.app/teTeX/bin ]; then
         mypath=$mypath:/Applications/UpTeX.app/teTeX/bin
     fi

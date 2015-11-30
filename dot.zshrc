@@ -293,4 +293,11 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)" ; fi
 stty -ixon
 
 ### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
+#export PATH="/usr/local/heroku/bin:$PATH"
+
+# 重複せずにpathを登録
+#   cf. http://yonchu.hatenablog.com/entry/20120415/1334506855
+typeset -U path
+if [ `uname` = "Darwin" ]; then
+    path=(/usr/local/heroku/bin(N-/) ~/bin(N-/) ~/opt/bin(N-/) /usr/local/bin(N-/) ${path})
+fi
