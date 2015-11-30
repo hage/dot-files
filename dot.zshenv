@@ -51,3 +51,5 @@ if [ -e ~/lib/tex ]; then
 fi
 
 export OMAKEPATH=~/lib/makefile:/usr/local/lib/omake:.
+
+if which rbenv > /dev/null; then eval "$(rbenv init --no-rehash - zsh)" ; fi
