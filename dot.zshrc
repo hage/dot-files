@@ -287,6 +287,8 @@ function cde () {
 #     bindkey -M afu "^M" afu+cancel-and-accept-line
 # fi
 
+if which ng > /dev/null; then export EDITOR=ng ; fi
+
 # rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)" ; fi
 
