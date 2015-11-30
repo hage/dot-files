@@ -147,7 +147,7 @@ if test -x /usr/local/bin/lv; then
     LV="-c -E'$EDITOR +%d'"; export LV
 else
     PAGER=/usr/bin/less; export PAGER
-    export LESS='-X'
+    export LESS='-X -g -j.3'
 fi
 
 
