@@ -174,6 +174,7 @@ alias gd='dirs -v; echo -n "select number: "; read newdir; cd +"$newdir"'
 alias sjis2euc='nkf -SXZeLu'
 alias cleanelc='rm `find ~/.emacs.d -name "*.elc"`'
 alias bx='bundle exec'
+alias du1="du -hd1"
 
 function mkdirr {
     mkdir -p $*
