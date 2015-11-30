@@ -290,9 +290,6 @@ function cde () {
 # rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)" ; fi
 
-cd ~
-echo
-clear
 stty -ixon
 
 ### Added by the Heroku Toolbelt
