@@ -289,6 +289,19 @@ function cde () {
 
 if which ng > /dev/null; then export EDITOR=ng ; fi
 
+# man for tmux
+# tmux環境下にあるときにmanを表示させると画面を分割して表示する
+function man_tmux() {
+    if [ $# -le 1 ]; then
+        tmux split-window -h "color_man $@"
+    else
+        color_man $@
+    fi
+}
+if [ "$TMUX" != "" ]; then
+    alias man=man_tmux
+fi
+
 # rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)" ; fi
 
