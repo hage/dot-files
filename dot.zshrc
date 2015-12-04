@@ -108,6 +108,8 @@ function history-all { history -E 1 }
 setopt histignorealldups
 # すべてのzshプロセスで履歴を共有
 setopt share_history
+# スペースで始めるとヒストリに登録しない
+setopt hist_ignore_space
 
 # コマンド特有の補完
 #  Hosts to use for completion (see later zstyle)
