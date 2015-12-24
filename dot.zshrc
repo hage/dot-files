@@ -304,6 +304,11 @@ if [ "$TMUX" != "" ]; then
     alias man=man_tmux
 fi
 
+if [ -r ~/.homebrew_github_api_token ]
+then
+    source ~/.homebrew_github_api_token
+fi
+
 # rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)" ; fi
 
