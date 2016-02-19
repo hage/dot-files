@@ -177,6 +177,8 @@ alias sjis2euc='nkf -SXZeLu'
 alias cleanelc='rm `find ~/.emacs.d -name "*.elc"`'
 alias bx='bundle exec'
 alias du1="du -hd1"
+alias ql='qlmanage -p "$@" >& /dev/null'
+alias rcreload='source ~/.zshrc'
 
 function mkdirr {
     mkdir -p $*
