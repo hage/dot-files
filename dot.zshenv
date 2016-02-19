@@ -5,6 +5,7 @@ export TZ=JST-9
 export LANG=ja_JP.UTF-8
 export LC_MESSAGES=C
 export LC_TIME=C
+export MANPAGER='less -isRWXgj.3'
 
 if [ -e ~/lib/ruby ]; then
    export RUBYLIB=~/lib/ruby
