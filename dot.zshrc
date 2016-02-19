@@ -219,7 +219,7 @@ export LANG=ja_JP.UTF-8
 # brew install source-highlight をすること
 if which source-highlight > /dev/null ; then
     export LESS="$LESS -R"
-    export LESSOPEN='| src-hilite-lesspipe.sh %s'
+    export LESSOPEN='| ~/bin/src-hilite-lesspipe-256.sh %s'
 fi
 
 
