@@ -329,5 +329,5 @@ export NOTIFY_COMMAND_COMPLETE_TIMEOUT=10
 #   cf. http://yonchu.hatenablog.com/entry/20120415/1334506855
 typeset -U path
 if [ `uname` = "Darwin" ]; then
-    path=(/usr/local/heroku/bin(N-/) ~/bin(N-/) ~/opt/bin(N-/) /usr/local/bin(N-/) ${path})
+    path=(/usr/local/heroku/bin(N-/) ~/bin(N-/) ~/.rbenv/shims(N-/) ~/opt/bin(N-/) /usr/local/bin(N-/) ${path})
 fi
