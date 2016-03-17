@@ -331,3 +331,13 @@ typeset -U path
 if [ `uname` = "Darwin" ]; then
     path=(/usr/local/heroku/bin(N-/) ~/bin(N-/) ~/.rbenv/shims(N-/) ~/opt/bin(N-/) /usr/local/bin(N-/) ${path})
 fi
+
+
+# docker
+alias d=docker
+alias dm=docker-machine
+alias doc=docker-compose
+function de() {
+    eval "$(docker-machine env 2> /dev/null)"
+}
+de
