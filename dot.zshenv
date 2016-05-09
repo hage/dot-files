@@ -19,7 +19,6 @@ typeset -U path cdpath fpath manpath omakepath
 
 # PATH
 if [ `uname` = "Darwin" ]; then
-    echo $path
     path=(/usr/local/heroku/bin(N-/) ~/bin(N-/) ~/.rbenv/shims(N-/) ~/opt/bin(N-/) /usr/local/bin(N-/) ${path})
     manpath=(/usr/local/share/man(N-/) /usr/local/opt/erlang/lib/erlang/man(N-/) ${manpath})
 fi
