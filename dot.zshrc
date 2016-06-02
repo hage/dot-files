@@ -113,13 +113,6 @@ setopt hist_ignore_space
 
 # コマンド特有の補完
 #  Hosts to use for completion (see later zstyle)
-hosts=(localhost `hostname` scipio.hage.teria.com \
-    master.teria.com club.sp-network.co.jp hage@mizu.nurs.or.jp \
-    catalog.you-group.com 211.4.228.10 neon.excite.co.jp
-    flat4.unixmagic.net augustus.hage.teria.com neon.excite.co.jp \
-    iulius.hage.teria.com ssh promo01.tailback.co.jp \
-    catalog2.webpass.jp mitaka2.mitaka.ne.jp gizmobies.co.jp\
-    m4p4-freebsd.hage.teria.com airnavi.local)
 cdpath=(~ ~/project)
 
 autoload -U compinit
