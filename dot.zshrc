@@ -311,9 +311,9 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)" ; fi
 stty -ixon
 
 # notify
-source ~/.zsh.d/zsh-notify/notify.plugin.zsh
-export SYS_NOTIFIER="/usr/local/bin/terminal-notifier"
-export NOTIFY_COMMAND_COMPLETE_TIMEOUT=10
+# source ~/.zsh.d/zsh-notify/notify.plugin.zsh
+# export SYS_NOTIFIER="/usr/local/bin/terminal-notifier"
+# export NOTIFY_COMMAND_COMPLETE_TIMEOUT=10
 
 
 # docker
