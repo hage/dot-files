@@ -307,6 +307,8 @@ fi
 
 # rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)" ; fi
+# bundle exec を不要に http://qiita.com/ymmtmdk/items/374d5319e8d5c9ab2ff4
+# export RUBYGEMS_GEMDEPS=-
 
 stty -ixon
 
