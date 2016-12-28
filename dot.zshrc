@@ -242,6 +242,8 @@ e () {
     tmuxemacs
 }
 
+alias ee='cd ~/.emacs.d && cask update && emacs'
+
 ## Invoke the ``dired'' of current working directory in Emacs buffer.
 function eff () {
     if [ $1 ]; then
