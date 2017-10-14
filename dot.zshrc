@@ -172,6 +172,7 @@ alias bx='bundle exec'
 alias du1="du -hd1"
 alias ql='qlmanage -p "$@" >& /dev/null'
 alias rcreload='source ~/.zshrc'
+alias wgett='wget --content-disposition'
 
 function mkdirr {
     mkdir -p $*
