@@ -225,15 +225,15 @@ function tmux-remake-socket () {
 }
 
 #### Emacs functions
-tmuxemacs () {
+tmux-select-emacs () {
     if [ $TMUX ] ; then
-	tmux find-window -N 'emacs-'
+	tmux select-window -t 'Emacs'
     fi
 }
 
 e () {
     emacsclient -a emacs -n $*
-    tmuxemacs
+    tmux-select-emacs
 }
 
 alias ee='cd ~/.emacs.d && cask update && emacs'
@@ -245,7 +245,7 @@ function eff () {
     else
 	dir="$PWD/"
     fi
-    tmuxemacs
+    tmux-select-emacs
     emacsclient -ne "(helm-find-files-1 \"$dir\")"
 }
 
