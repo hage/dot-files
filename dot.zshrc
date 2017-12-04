@@ -137,13 +137,15 @@ bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
 
 # pager
-if test -x /usr/local/bin/lv; then
-    PAGER=/usr/local/bin/lv; export PAGER
-    LV="-c -E'$EDITOR +%d'"; export LV
-else
-    PAGER=/usr/bin/less; export PAGER
-    export LESS='-X -g -j.3'
+PAGER=/usr/bin/less; export PAGER
+export LESS='-FMiXgj.3'
+export MANPAGER='less -LisRWXgj.3'
+# ソース表示に色づけ
+# brew install source-highlight をすること
+if which source-highlight > /dev/null ; then
+    export LESSOPEN='| ~/bin/src-hilite-lesspipe-256.sh %s'
 fi
+
 
 
 
@@ -206,16 +208,7 @@ zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
 export LSCOLORS=dxfxcxdxgxegedabagacad
 
-export GIT_PAGER='less -RF'
 export LANG=ja_JP.UTF-8
-
-# ソース表示に色づけ
-# brew install source-highlight をすること
-if which source-highlight > /dev/null ; then
-    export LESS="$LESS -R"
-    export LESSOPEN='| ~/bin/src-hilite-lesspipe-256.sh %s'
-fi
-
 
 function tmux-remake-socket () {
     if [ ! $TMUX ]; then
