@@ -138,7 +138,7 @@ bindkey "^N" history-beginning-search-forward-end
 
 # pager
 PAGER=/usr/bin/less; export PAGER
-export LESS='-FMiXgj.3'
+export LESS='-FRMiXgj.3'
 export MANPAGER='less -LisRWXgj.3'
 # ソース表示に色づけ
 # brew install source-highlight をすること
