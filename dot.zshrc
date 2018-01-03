@@ -372,4 +372,10 @@ then
     }
     zle -N peco-cdr
     bindkey '^x' peco-cdr
+
+    ################ Docker
+    # DP: docker kill DP のように使う
+    alias -g DP='`docker ps | tail -n +2 | peco --prompt "Docker Processes:" | cut -d" " -f1`'
+    alias -g DI='`docker images | tail -n +2 | peco --prompt "Docker Images:" | cut -d" " -f1`'
+
 fi
