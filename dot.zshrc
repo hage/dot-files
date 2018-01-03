@@ -342,27 +342,20 @@ zstyle ':chpwd:*' recent-dirs-pushd true
 
 
 ################ peco
-if which peco > /dev/null
+FZF_COMMAND=fzf-tmux
+
+if which $FZF_COMMAND > /dev/null
 then
-    function peco-history-selection() {
-        BUFFER=`history -n 1 | tail -r  | awk '!a[$0]++' | peco`
-        CURSOR=$#BUFFER
-        zle reset-prompt
-    }
-    zle -N peco-history-selection
-    bindkey '^R' peco-history-selection
-
-
     ################ search a destination from cdr list
-    function peco-get-destination-from-cdr() {
+    function fzf-get-destination-from-cdr() {
         cdr -l | \
             sed -e 's/^[[:digit:]]*[[:blank:]]*//' | \
-            peco --query "$LBUFFER"
+            $FZF_COMMAND --query "$LBUFFER"
     }
 
     ### search a destination from cdr list and cd the destination
-    function peco-cdr() {
-        local destination="$(peco-get-destination-from-cdr)"
+    function fzf-cdr() {
+        local destination="$(fzf-get-destination-from-cdr)"
         if [ -n "$destination" ]; then
             BUFFER="cd $destination"
             zle accept-line
@@ -370,17 +363,16 @@ then
             zle reset-prompt
         fi
     }
-    zle -N peco-cdr
-    bindkey '^x' peco-cdr
+    zle -N fzf-cdr
+    bindkey '^x' fzf-cdr
 
     ################ Docker
     # DP: docker kill DP のように使う
-    alias -g DP='`docker ps | tail -n +2 | fzf-tmux -m --prompt "Docker Processes: " | cut -d" " -f1`'
-    alias -g DI='`docker images | tail -n +2 | fzf-tmux -m --prompt "Docker Images: " | cut -d" " -f1`'
+    alias -g DP='`docker ps | tail -n +2 | $FZF_COMMAND -m --prompt "Docker Processes: " | cut -d" " -f1`'
+    alias -g DI='`docker images | tail -n +2 | $FZF_COMMAND -m --prompt "Docker Images: " | cut -d" " -f1`'
 
+    export FZF_DEFAULT_OPTS='--height 40% --reverse -e'
+    export FZF_TMUX=1
+    alias fzf=$FZF_COMMAND
+    [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 fi
-
-export FZF_DEFAULT_OPTS='--height 40% --reverse -e'
-export FZF_TMUX=1
-alias fzf='fzf-tmux'
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
