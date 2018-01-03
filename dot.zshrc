@@ -375,7 +375,12 @@ then
 
     ################ Docker
     # DP: docker kill DP のように使う
-    alias -g DP='`docker ps | tail -n +2 | peco --prompt "Docker Processes:" | cut -d" " -f1`'
-    alias -g DI='`docker images | tail -n +2 | peco --prompt "Docker Images:" | cut -d" " -f1`'
+    alias -g DP='`docker ps | tail -n +2 | fzf-tmux -m --prompt "Docker Processes: " | cut -d" " -f1`'
+    alias -g DI='`docker images | tail -n +2 | fzf-tmux -m --prompt "Docker Images: " | cut -d" " -f1`'
 
 fi
+
+export FZF_DEFAULT_OPTS='--height 40% --reverse -e'
+export FZF_TMUX=1
+alias fzf='fzf-tmux'
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
