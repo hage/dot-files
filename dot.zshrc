@@ -366,13 +366,13 @@ then
     zle -N fzf-cdr
     bindkey '^x' fzf-cdr
 
-    ################ Docker
-    # DP: docker kill DP のように使う
-    alias -g DP='`docker ps | tail -n +2 | $FZF_COMMAND -m --prompt "Docker Processes: " | cut -d" " -f1`'
-    alias -g DI='`docker images | tail -n +2 | $FZF_COMMAND -m --prompt "Docker Images: " | cut -d" " -f1`'
-
     export FZF_DEFAULT_OPTS='--height 40% --reverse -e --bind=ctrl-k:kill-line,ctrl-v:page-down,alt-v:page-up --color=dark,hl:202'
     export FZF_TMUX=1
     alias fzf=$FZF_COMMAND
     [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+    ################ Docker
+    # DP: docker kill DP のように使う
+    alias -g DP='`docker ps -a | $FZF_COMMAND --header-lines=1 -m --prompt "Docker Processes: " | cut -d" " -f1`'
+    alias -g DI='`docker images | $FZF_COMMAND --header-lines=1 -m --prompt "Docker Images: " | awk "{print \\$3}"`'
 fi
