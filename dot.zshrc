@@ -371,7 +371,7 @@ then
     alias -g DP='`docker ps | tail -n +2 | $FZF_COMMAND -m --prompt "Docker Processes: " | cut -d" " -f1`'
     alias -g DI='`docker images | tail -n +2 | $FZF_COMMAND -m --prompt "Docker Images: " | cut -d" " -f1`'
 
-    export FZF_DEFAULT_OPTS='--height 40% --reverse -e'
+    export FZF_DEFAULT_OPTS='--height 40% --reverse -e --bind=ctrl-k:kill-line,ctrl-v:page-down,alt-v:page-up --color=dark,hl:202'
     export FZF_TMUX=1
     alias fzf=$FZF_COMMAND
     [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
