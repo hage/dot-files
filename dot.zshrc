@@ -325,7 +325,6 @@ de
 alias v=vagrant
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 function indent2(){ a='(progn (let ((buf (generate-new-buffer "a"))) (with-current-buffer buf (condition-case nil (let (l) (while (setq l (read-string "")) (insert l "\n"))) (error nil))) (set-buffer buf))(';b='-mode)(indent-region (point-min)(point-max))(princ (buffer-string)))'; emacs -batch -l ~/.emacs.d/init.el -eval "$a$1$b"; }
 
@@ -376,4 +375,45 @@ then
     # DP: docker kill DP のように使う
     alias -g DP='`docker ps -a | $FZF_COMMAND --header-lines=1 -m --prompt "Docker Processes: " | cut -d" " -f1`'
     alias -g DI='`docker images | $FZF_COMMAND --header-lines=1 -m --prompt "Docker Images: " | awk "{print \\$1 \":\" \\$2}"`'
+
+    alias docker-ip="docker inspect --format '{{ .NetworkSettings.IPAddress }}' DP"
 fi
+
+
+################ zplug
+export ZPLUG_HOME=/usr/local/opt/zplug
+source $ZPLUG_HOME/init.zsh
+zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+
+
+# theme (https://github.com/sindresorhus/pure#zplug)　好みのスキーマをいれてくだされ。
+zplug "mafredri/zsh-async"
+# zplug "sindresorhus/pure"
+# 構文のハイライト(https://github.com/zsh-users/zsh-syntax-highlighting)
+zplug "zsh-users/zsh-syntax-highlighting"
+# history関係
+zplug "zsh-users/zsh-history-substring-search"
+# タイプ補完
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-completions"
+zplug "chrissicool/zsh-256color"
+zplug "rhysd/zsh-bundle-exec"
+
+# notify
+zplug "marzocchi/zsh-notify"
+zstyle ':notify:*' command-complete-timeout 10
+zstyle ':notify:*' notifier /usr/local/bin/terminal-notifier
+
+# ディレクトリ
+zplug "b4b4r07/enhancd", use:init.sh
+export ENHANCD_FILTER=$FZF_COMMAND
+
+# Install plugins if there are plugins that have not been installed
+if ! zplug check --verbose; then
+  printf "Install? [y/N]: "
+  if read -q; then
+    echo; zplug install
+  fi
+fi
+# Then, source plugins and add commands to $PATH
+zplug load
