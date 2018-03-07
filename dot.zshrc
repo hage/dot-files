@@ -375,5 +375,5 @@ then
     ################ Docker
     # DP: docker kill DP のように使う
     alias -g DP='`docker ps -a | $FZF_COMMAND --header-lines=1 -m --prompt "Docker Processes: " | cut -d" " -f1`'
-    alias -g DI='`docker images | $FZF_COMMAND --header-lines=1 -m --prompt "Docker Images: " | awk "{print \\$3}"`'
+    alias -g DI='`docker images | $FZF_COMMAND --header-lines=1 -m --prompt "Docker Images: " | awk "{print \\$1 \":\" \\$2}"`'
 fi
