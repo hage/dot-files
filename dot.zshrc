@@ -327,6 +327,7 @@ alias v=vagrant
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
+function indent2(){ a='(progn (let ((buf (generate-new-buffer "a"))) (with-current-buffer buf (condition-case nil (let (l) (while (setq l (read-string "")) (insert l "\n"))) (error nil))) (set-buffer buf))(';b='-mode)(indent-region (point-min)(point-max))(princ (buffer-string)))'; emacs -batch -l ~/.emacs.d/init.el -eval "$a$1$b"; }
 
 ################ cdr の設定
 # cdr, add-zsh-hook を有効にする
