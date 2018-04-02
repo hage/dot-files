@@ -411,3 +411,11 @@ if ! zplug check --verbose; then
 fi
 # Then, source plugins and add commands to $PATH
 zplug load
+
+################ zplug で読み込んだものの設定
+# zsh-autosuggestions がゴミを残すようになったのでその対策
+# https://qiita.com/__hage/items/dbdf2c9d28514fc85f37
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS=(auto_bundle_exec_accept_line $ZSH_AUTOSUGGEST_CLEAR_WIDGETS)
+echo $ZSH_AUTOSUGGEST_CLEAR_WIDGETS
+
+export PATH="/usr/local/opt/imagemagick@6/bin:$PATH"
