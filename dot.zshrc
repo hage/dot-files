@@ -399,9 +399,8 @@ zplug "marzocchi/zsh-notify"
 zstyle ':notify:*' command-complete-timeout 10
 zstyle ':notify:*' notifier /usr/local/bin/terminal-notifier
 
-# ディレクトリ
-zplug "b4b4r07/enhancd", use:init.sh
-export ENHANCD_FILTER=$FZF_COMMAND
+# cd
+zplug "changyuheng/zsh-interactive-cd"
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
