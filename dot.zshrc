@@ -418,3 +418,7 @@ autoload -U compinit
 compinit
 
 
+# see 'brew info php@7.1'
+export PATH="/usr/local/opt/php@7.1/bin:$PATH"
+export PATH="/usr/local/opt/php@7.1/sbin:$PATH"
+
