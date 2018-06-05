@@ -390,7 +390,7 @@ zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zsh-users/zsh-history-substring-search"
 # タイプ補完
 zplug "zsh-users/zsh-autosuggestions", hook-load: "ZSH_AUTOSUGGEST_CLEAR_WIDGETS=(auto_bundle_exec_accept_line $ZSH_AUTOSUGGEST_CLEAR_WIDGETS)"
-zplug "zsh-users/zsh-completions"
+zplug "zsh-users/zsh-completions", hook-load: "plugins=($PLUGINS zsh-completions)"
 zplug "chrissicool/zsh-256color"
 zplug "rhysd/zsh-bundle-exec"
 
@@ -412,8 +412,9 @@ fi
 # Then, source plugins and add commands to $PATH
 zplug load
 
-################ zplug で読み込んだものの設定
-# zsh-autosuggestions がゴミを残すようになったのでその対策
-# https://qiita.com/__hage/items/dbdf2c9d28514fc85f37
-
 export PATH="/usr/local/opt/imagemagick@6/bin:$PATH"
+
+autoload -U compinit
+compinit
+
+
