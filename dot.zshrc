@@ -1,7 +1,6 @@
 # -*- mode:shell-script -*-
-if [ "$TERMTERM_PROGRAM" = "iTerm.app" -a "$TMUX" = "" ]; then
-    eval `tset -s rxvt-256color`
-    # eval `tset -s xterm-24bit`
+if [ "$TERM_PROGRAM" = "iTerm.app" -a "$TMUX" = "" ]; then
+    eval `tset -s xterm-24bits`
 elif [ "$IN_SCREEN" = "1" -o "$TERM" = "screen" ]; then
     eval `tset -s xterm-256color`
     export IN_SCREEN=1
