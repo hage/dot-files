@@ -177,6 +177,7 @@ alias du1="du -hd1"
 alias ql='qlmanage -p "$@" >& /dev/null'
 alias rcreload='source ~/.zshrc'
 alias wgett='wget --content-disposition'
+alias cdg='cd `git rev-parse --show-toplevel`'
 
 function mkdirr {
     mkdir -p $*
@@ -254,9 +255,9 @@ function eff () {
 ## Chdir to the ``default-directory'' of currently opened in Emacs buffer.
 function cde () {
         EMACS_CWD=`emacsclient -e "(return-current-working-directory-to-shell)" | sed 's/^"\(.*\)"$/\1/'`
-        echo "chdir to $EMACS_CWD"
         cd "$EMACS_CWD"
 }
+alias cdeg='cde;cdg'
 
 ################################################################
 # auto-fu.zsh
