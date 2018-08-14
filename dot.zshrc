@@ -239,6 +239,13 @@ function e () {
     tmux-select-emacs
 }
 
+function et () {
+    emacsclient -e "(elscreen-find-file \"$*\")"
+    tmux-select-emacs
+}
+
+
+
 alias ee='cd ~/.emacs.d && cask update && emacs'
 
 ## Invoke the ``dired'' of current working directory in Emacs buffer.
