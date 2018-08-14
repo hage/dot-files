@@ -228,13 +228,13 @@ function tmux-remake-socket () {
 }
 
 #### Emacs functions
-tmux-select-emacs () {
+function tmux-select-emacs () {
     if [ $TMUX ] ; then
 	tmux select-window -t 'Emacs'
     fi
 }
 
-e () {
+function e () {
     emacsclient -a emacs -n $*
     tmux-select-emacs
 }
