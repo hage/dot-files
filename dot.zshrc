@@ -68,7 +68,8 @@ unsetopt promptcr
 limit coredumpsize 0
 setopt prompt_subst
 PROMPT='%{[32m%}${WINDOW:+"$WINDOW:"}%n@%B%m%b(%?)%{[m%}%B%#%b '
-RPROMPT='[`rprompt-git-current-branch`%{[32m%}%~%b%{[m%}]'
+rprompt_1='%{[32m%}%~%b%{[m%}'
+RPROMPT='[`rprompt-git-current-branch`$rprompt_1]'
 WORDCHARS=''
 
 if [ $EMACS ]; then
@@ -403,6 +404,7 @@ zplug "zsh-users/zsh-autosuggestions", hook-load: "ZSH_AUTOSUGGEST_CLEAR_WIDGETS
 zplug "zsh-users/zsh-completions", hook-load: "plugins=($PLUGINS zsh-completions)"
 zplug "chrissicool/zsh-256color"
 zplug "rhysd/zsh-bundle-exec"
+zplug "olivierverdier/zsh-git-prompt", use:zshrc.sh
 
 # notify
 zplug "marzocchi/zsh-notify"
@@ -422,11 +424,27 @@ fi
 # Then, source plugins and add commands to $PATH
 zplug load
 
+if which git_super_status &> /dev/null; then
+    # 上の条件に合致した時 RPROMPT を git_super_status を使ったもので上書きする
+    # Customize prompt
+    ZSH_THEME_GIT_PROMPT_PREFIX="("
+    ZSH_THEME_GIT_PROMPT_SUFFIX=")"
+    ZSH_THEME_GIT_PROMPT_SEPARATOR="|"
+    ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg[blue]%}"
+    ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[red]%}%{●%G%}"
+    ZSH_THEME_GIT_PROMPT_CONFLICTS="%{$fg[red]%}%{✖%G%} "
+    ZSH_THEME_GIT_PROMPT_CHANGED="%{$fg[blue]%}%{+%G%}"
+    ZSH_THEME_GIT_PROMPT_BEHIND="%{↓%G%}"
+    ZSH_THEME_GIT_PROMPT_AHEAD="%{↑%G%}"
+    ZSH_THEME_GIT_PROMPT_UNTRACKED="%{…%G%}"
+    ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[green]%}%{✔%G%} "
+    RPROMPT=' $(git_super_status)[$rprompt_1]'
+fi
+
 export PATH="/usr/local/opt/imagemagick@6/bin:$PATH"
 
 autoload -U compinit
 compinit
-
 
 # see 'brew info php@7.1'
 export PATH="/usr/local/opt/php@7.1/bin:$PATH"
