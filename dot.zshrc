@@ -432,3 +432,11 @@ compinit
 export PATH="/usr/local/opt/php@7.1/bin:$PATH"
 export PATH="/usr/local/opt/php@7.1/sbin:$PATH"
 
+export PATH="/usr/local/opt/mysql-client/bin:$PATH"
+
+
+# ncurses
+export PATH="/usr/local/opt/ncurses/bin:$PATH"
+export LDFLAGS="-L/usr/local/opt/ncurses/lib"
+export CPPFLAGS="-I/usr/local/opt/ncurses/include"
+export PKG_CONFIG_PATH="/usr/local/opt/ncurses/lib/pkgconfig"
