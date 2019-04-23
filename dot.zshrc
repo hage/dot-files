@@ -432,12 +432,12 @@ if which git_super_status &> /dev/null; then
     ZSH_THEME_GIT_PROMPT_SEPARATOR="|"
     ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg[blue]%}"
     ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[red]%}%{o%G%}"
-    ZSH_THEME_GIT_PROMPT_CONFLICTS="%{$fg[red]%}%{x%G%} "
+    ZSH_THEME_GIT_PROMPT_CONFLICTS="%{$fg[red]%}%{x%G%}"
     ZSH_THEME_GIT_PROMPT_CHANGED="%{$fg[blue]%}%{+%G%}"
-    ZSH_THEME_GIT_PROMPT_BEHIND="%{↓%G%}"
-    ZSH_THEME_GIT_PROMPT_AHEAD="%{↑%G%}"
+    ZSH_THEME_GIT_PROMPT_BEHIND="%{-%G%}"
+    ZSH_THEME_GIT_PROMPT_AHEAD="%{+%G%}"
     ZSH_THEME_GIT_PROMPT_UNTRACKED="%{=%G%}"
-    ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[green]%}%{v%G%} "
+    ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[green]%}%{o%G%}"
     RPROMPT=' $(git_super_status)[$rprompt_1]'
 fi
 
