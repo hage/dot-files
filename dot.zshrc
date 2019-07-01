@@ -405,6 +405,7 @@ zplug "zsh-users/zsh-completions", hook-load: "plugins=($PLUGINS zsh-completions
 zplug "chrissicool/zsh-256color"
 zplug "rhysd/zsh-bundle-exec"
 zplug "olivierverdier/zsh-git-prompt", use:zshrc.sh
+zplug "hage/tmuxtabinfo.zsh", use:tmuxtabinfo.zsh, hook-load:"tmuxtabinfo"
 
 # notify
 zplug "marzocchi/zsh-notify"
