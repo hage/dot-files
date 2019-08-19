@@ -465,3 +465,6 @@ export PKG_CONFIG_PATH="/usr/local/opt/ncurses/lib/pkgconfig"
 
 # IEx
 export ERL_AFLAGS="-kernel shell_history enabled"
+
+# added by travis gem
+[ -f /Users/tura/.travis/travis.sh ] && source /Users/tura/.travis/travis.sh
