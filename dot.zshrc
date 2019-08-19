@@ -385,6 +385,9 @@ then
     alias docker-ip="docker inspect --format '{{ .NetworkSettings.IPAddress }}' DP"
 fi
 
+################ directory alias
+export DIRECTRY_ALIAS_FILE=~/.directory_alias
+[ -f $DIRECTRY_ALIAS_FILE ] && source $DIRECTRY_ALIAS_FILE
 
 ################ zplug
 export ZPLUG_HOME=/usr/local/opt/zplug
