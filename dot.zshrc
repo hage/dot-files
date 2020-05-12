@@ -1,12 +1,13 @@
 # -*- mode:shell-script -*-
-if [ "$TERM_PROGRAM" = "iTerm.app" -a "$TMUX" = "" ]; then
-    eval `tset -s xterm-24bits`
-elif [ "$IN_SCREEN" = "1" -o "$TERM" = "screen" ]; then
-    eval `tset -s xterm-256color`
-    export IN_SCREEN=1
-elif [ "$TERMINAL_EMULATOR" = "PuTTY" ]; then
-    eval `tset -s xterm-256color`
-fi
+
+# if [ "$TERM_PROGRAM" = "iTerm.app" -a "$TMUX" = "" ]; then
+#     eval `tset -s xterm-24bits`
+# elif [ "$IN_SCREEN" = "1" -o "$TERM" = "screen" ]; then
+#     eval `tset -s xterm-256color`
+#     export IN_SCREEN=1
+# elif [ "$TERMINAL_EMULATOR" = "PuTTY" ]; then
+#     eval `tset -s xterm-256color`
+# fi
 
 if [ "$IN_LOGIN" = "true" ]; then
     unset IN_LOGIN
@@ -16,6 +17,11 @@ fi
 
 export GUARD_GEM_SILENCE_DEPRECATIONS=1
 
+case ${OSTYPE} in
+    darwin*)
+        fpath=(/usr/local/share/zsh/functions ${fpath})
+        ;;
+esac
 
 ################ gitのブランチ名をコマンドラインに表示
 # ${fg[...]} や $reset_color をロード
@@ -141,7 +147,7 @@ bindkey "^N" history-beginning-search-forward-end
 
 # pager
 PAGER=/usr/bin/less; export PAGER
-export LESS='-FRMiXgj.3'
+export LESS='-RMiXgj.3'
 export MANPAGER='less -LisRWXgj.3'
 # ソース表示に色づけ
 # brew install source-highlight をすること
@@ -199,6 +205,10 @@ alias update-sync-link="chmod 755 $link_dropbox_dot_files_command && $link_dropb
 # jman は環境変数 MANPATH 以下の全マニュアルページより補完
 # jman <数字> だとマニュアルの section <数字> から補完
 compdef _man jman
+
+if [ -d /usr/local/opt/erlang/lib/erlang/man ]; then
+    MANPATH=$MANPATH:/usr/local/opt/erlang/lib/erlang/man
+fi
 
 if [ "$TERM" = "emacs" ]; then
     stty onocr
@@ -297,10 +307,10 @@ if which ng > /dev/null; then export EDITOR=ng ; fi
 # man for tmux
 # tmux環境下にあるときにmanを表示させると画面を分割して表示する
 function man_tmux() {
-    if [ $# -le 1 ]; then
-        tmux split-window -h "color_man $@"
-    else
+    if [ `tmux lsp|wc -l` -ge 2 ]; then
         color_man $@
+    else
+        LESS="-L" tmux split-window -h "color_man $@"
     fi
 }
 if [ "$TMUX" != "" ]; then
@@ -335,16 +345,16 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 function indent2(){ a='(progn (let ((buf (generate-new-buffer "a"))) (with-current-buffer buf (condition-case nil (let (l) (while (setq l (read-string "")) (insert l "\n"))) (error nil))) (set-buffer buf))(';b='-mode)(indent-region (point-min)(point-max))(princ (buffer-string)))'; emacs -batch -l ~/.emacs.d/init.el -eval "$a$1$b"; }
 
 ################ cdr の設定
-# cdr, add-zsh-hook を有効にする
-autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
-add-zsh-hook chpwd chpwd_recent_dirs
+# # cdr, add-zsh-hook を有効にする
+# autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+# add-zsh-hook chpwd chpwd_recent_dirs
 
-# cdr の設定
-zstyle ':completion:*' recent-dirs-insert both
-zstyle ':chpwd:*' recent-dirs-max 500
-zstyle ':chpwd:*' recent-dirs-default true
-zstyle ':chpwd:*' recent-dirs-file "$HOME/.cache/shell/chpwd-recent-dirs"
-zstyle ':chpwd:*' recent-dirs-pushd true
+# # cdr の設定
+# zstyle ':completion:*' recent-dirs-insert both
+# zstyle ':chpwd:*' recent-dirs-max 500
+# zstyle ':chpwd:*' recent-dirs-default true
+# zstyle ':chpwd:*' recent-dirs-file "$HOME/.cache/shell/chpwd-recent-dirs"
+# zstyle ':chpwd:*' recent-dirs-pushd true
 
 
 ################ peco
@@ -352,6 +362,14 @@ FZF_COMMAND=fzf-tmux
 
 if which $FZF_COMMAND > /dev/null
 then
+    ################ history
+    function select-history() {
+        BUFFER=$(history -n -r 1 | fzf --no-sort +m --query "$LBUFFER" --prompt="History > ")
+        CURSOR=$#BUFFER
+    }
+    zle -N select-history
+    bindkey '^r' select-history
+
     ################ search a destination from cdr list
     function fzf-get-destination-from-cdr() {
         cdr -l | \
@@ -403,12 +421,16 @@ zplug "zsh-users/zsh-syntax-highlighting"
 # history関係
 zplug "zsh-users/zsh-history-substring-search"
 # タイプ補完
+
+# zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-autosuggestions", hook-load: "ZSH_AUTOSUGGEST_CLEAR_WIDGETS=(auto_bundle_exec_accept_line $ZSH_AUTOSUGGEST_CLEAR_WIDGETS)"
+
 zplug "zsh-users/zsh-completions", hook-load: "plugins=($PLUGINS zsh-completions)"
 zplug "chrissicool/zsh-256color"
 zplug "rhysd/zsh-bundle-exec"
 zplug "olivierverdier/zsh-git-prompt", use:zshrc.sh
 zplug "hage/tmuxtabinfo.zsh", use:tmuxtabinfo.zsh, hook-load:"tmuxtabinfo"
+zplug "Tarrasch/zsh-autoenv"
 
 # notify
 zplug "marzocchi/zsh-notify"
@@ -468,3 +490,16 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 
 # added by travis gem
 [ -f /Users/tura/.travis/travis.sh ] && source /Users/tura/.travis/travis.sh
+
+
+# icu4c
+if [ -e /usr/local/opt/icu4c/bin ]; then
+    export PATH="/usr/local/opt/icu4c/bin:$PATH"
+    export PATH="/usr/local/opt/icu4c/sbin:$PATH"
+    export LDFLAGS="-L/usr/local/opt/icu4c/lib"
+    export CPPFLAGS="-I/usr/local/opt/icu4c/include"
+    export PKG_CONFIG_PATH="/usr/local/opt/icu4c/lib/pkgconfig"
+fi
+
+export EDITOR=cot
+eval "$(direnv hook zsh)"
