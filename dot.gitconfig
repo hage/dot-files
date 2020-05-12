@@ -1,34 +1,38 @@
+[alias]
+	st = status
+	sub = submodule
+	br = branch
+	ci = commit
+	co = checkout
+	unstage = reset HEAD --
+	loggraph = log --graph --oneline
 [user]
 	name = URA, Takefumi
-	email = ura@spirals.co.jp
-[core]
-        autocrlf=false
-	excludesfile = ~/.gitignore
-
+	email = ura.takefumi@gmail.com
 [color]
-  branch = auto
-  diff = auto
-  status = auto
-[color "branch"]
-  current = yellow reverse
-  local = yellow
-  remote = green
-[color "diff"]
-  meta = yellow
-  frag = magenta
-  old = red
-  new = green
-[color "status"]
-  added = yellow
-  changed = green
-  untracked = cyan
-[alias]
-	co = checkout
-	st = status
-	ci = commit
-	br = branch
-	sub = submodule
-	hist = log --pretty=format:\"%h %ar | %s%d [%an]\" --graph --date=short
-	conflicts = !git ls-files -u | cut -f 2 | sort -u
+	ui = auto
 [push]
 	default = upstream
+[core]
+	excludesfile = /Users/tura/.gitignore_global
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[commit]
+	template = /Users/tura/.stCommitMsg
+[github]
+	user = hage
+[merge]
+	ff = false
+[pull]
+	ff = only
+[http]
+	postBuffer = 4M
