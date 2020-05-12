@@ -20,7 +20,8 @@ typeset -U path cdpath fpath manpath omakepath
 # PATH
 if [ `uname` = "Darwin" ]; then
     path=(/usr/local/sbin(N-/) /usr/local/heroku/bin(N-/) ~/bin(N-/) ~/.rbenv/shims(N-/) ~/opt/bin(N-/) /usr/local/bin(N-/) ${path})
-    manpath=(/usr/local/share/man(N-/) /usr/local/opt/erlang/lib/erlang/man(N-/) ${manpath})
+    manpath=(/usr/local/share/man(N-/) /usr/local/opt/erlang/lib/erlang/man(N-/) /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/share/man(N-/) /Library/Developer/CommandLineTools/usr/share/man(N-/) ${manpath})
+    export MANPATH
 fi
 
 # 一般的なシェル変数の設定
