@@ -275,7 +275,7 @@ function cde () {
         EMACS_CWD=`emacsclient -e "(return-current-working-directory-to-shell)" | sed 's/^"\(.*\)"$/\1/'`
         cd "$EMACS_CWD"
 }
-alias cdeg='cde;cdg'
+alias cdd='cde;cdg'
 
 ################################################################
 # auto-fu.zsh
