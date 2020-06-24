@@ -23,43 +23,6 @@ case ${OSTYPE} in
         ;;
 esac
 
-################ gitのブランチ名をコマンドラインに表示
-# ${fg[...]} や $reset_color をロード
-autoload -U colors; colors
-
-function rprompt-git-current-branch {
-        local name st color
-
-        if [[ "$PWD" =~ '/\.git(/.*)?$' ]]; then
-                return
-        fi
-        name=$(basename "`git symbolic-ref HEAD 2> /dev/null`")
-        if [[ -z $name ]]; then
-                return
-        fi
-        st=`git status 2> /dev/null`
-        if [[ -n `echo "$st" | grep "^nothing to"` ]]; then
-                color=${fg[green]}
-        elif [[ -n `echo "$st" | grep "^nothing added"` ]]; then
-                color=${fg[yellow]}
-        elif [[ -n `echo "$st" | grep "^# Untracked"` ]]; then
-                color=${fg_bold[red]}
-        else
-                color=${fg[red]}
-        fi
-
-        # %{...%} は囲まれた文字列がエスケープシーケンスであることを明示する
-        # これをしないと右プロンプトの位置がずれる
-        echo "%{$color%}$name%{$reset_color%} "
-}
-
-# プロンプトが表示されるたびにプロンプト文字列を評価、置換する
-setopt prompt_subst
-
-# RPROMPT='[`rprompt-git-current-branch`%~]'
-################ gitのブランチ名をコマンドラインに表示 ここまで
-
-
 umask 022
 setopt NOCLOBBER
 setopt pushd_ignore_dups
@@ -72,10 +35,7 @@ setopt nolistbeep        # 補完表示時にビープ音を鳴らさない
 setopt no_beep
 unsetopt promptcr
 limit coredumpsize 0
-setopt prompt_subst
-PROMPT='%{[32m%}${WINDOW:+"$WINDOW:"}%n@%B%m%b(%?)%{[m%}%B%#%b '
-rprompt_1='%{[32m%}%~%b%{[m%}'
-RPROMPT='[`rprompt-git-current-branch`$rprompt_1]'
+
 WORDCHARS=''
 
 if [ $EMACS ]; then
@@ -275,7 +235,7 @@ function cde () {
         EMACS_CWD=`emacsclient -e "(return-current-working-directory-to-shell)" | sed 's/^"\(.*\)"$/\1/'`
         cd "$EMACS_CWD"
 }
-alias cdd='cde;cdg'
+alias cdd='cde;cdg;echo " -> `pwd`"'
 
 ################################################################
 # auto-fu.zsh
@@ -464,8 +424,14 @@ if which git_super_status &> /dev/null; then
     ZSH_THEME_GIT_PROMPT_AHEAD="%{+%G%}"
     ZSH_THEME_GIT_PROMPT_UNTRACKED="%{=%G%}"
     ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[green]%}%{o%G%}"
-    RPROMPT=' $(git_super_status)[$rprompt_1]'
+    RPROMPT=' $(git_super_status)'
 fi
+autoload -U colors; colors      # ${fg[...]} や $reset_color をロード
+setopt prompt_subst             # プロンプトが表示されるたびにプロンプト文字列を評価、置換する
+prompt_pwd='%{[32m%}%~%b%{[m%}'
+PROMPT='[$prompt_pwd]
+%{[32m%}${WINDOW:+"$WINDOW:"}%n@%B%m%b(%?)%{[m%}%B%#%b '
+
 
 export PATH="/usr/local/opt/imagemagick@6/bin:$PATH"
 
