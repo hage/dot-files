@@ -428,9 +428,26 @@ if which git_super_status &> /dev/null; then
 fi
 autoload -U colors; colors      # ${fg[...]} や $reset_color をロード
 setopt prompt_subst             # プロンプトが表示されるたびにプロンプト文字列を評価、置換する
+
 prompt_pwd='%{[32m%}%~%b%{[m%}'
-PROMPT='[$prompt_pwd]
-%{[32m%}${WINDOW:+"$WINDOW:"}%n@%B%m%b(%?)%{[m%}%B%#%b '
+PROMPT='%{[32m%}${WINDOW:+"$WINDOW:"}%n@%B%m%b(%?)%{[m%}%B%#%b '
+
+function unescapesequence() {
+    echo "$1" | sed -e "s/%{/\t/g;s/%}/\g/g;s/\t[^\t\g]*\g//g;"
+}
+function right_aligned_print() {
+    str=$1
+    echo $str
+    unescapesequence $str
+    len=`unescapesequence $str | wc -m`
+    padwidth=$(($COLUMNS - $len))
+    print -P ${(r:$padwidth:: :)}$str
+}
+precmd () {
+    wd=`pwd`
+    right_aligned_print "[%{[32m%}$wd%{[m%}]"
+}
+
 
 
 export PATH="/usr/local/opt/imagemagick@6/bin:$PATH"
