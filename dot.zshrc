@@ -437,8 +437,6 @@ function unescapesequence() {
 }
 function right_aligned_print() {
     str=$1
-    echo $str
-    unescapesequence $str
     len=`unescapesequence $str | wc -m`
     padwidth=$(($COLUMNS - $len))
     print -P ${(r:$padwidth:: :)}$str
