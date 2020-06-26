@@ -442,7 +442,7 @@ function right_aligned_print() {
     print -P ${(r:$padwidth:: :)}$str
 }
 precmd () {
-    wd=`pwd`
+    wd=`echo $PWD | sed -e "s%^$HOME%~%"`
     right_aligned_print "[%{[32m%}$wd%{[m%}]"
 }
 
