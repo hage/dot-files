@@ -487,3 +487,4 @@ fi
 
 export EDITOR='cot -w'
 eval "$(direnv hook zsh)"
+export GIT_DISCOVERY_ACROSS_FILESYSTEM=1
