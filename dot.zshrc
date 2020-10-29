@@ -391,7 +391,6 @@ zplug "zsh-users/zsh-autosuggestions", hook-load: "ZSH_AUTOSUGGEST_CLEAR_WIDGETS
 zplug "zsh-users/zsh-completions", hook-load: "plugins=($PLUGINS zsh-completions)"
 zplug "chrissicool/zsh-256color"
 zplug "rhysd/zsh-bundle-exec"
-zplug "olivierverdier/zsh-git-prompt", use:zshrc.sh
 zplug "hage/tmuxtabinfo.zsh", use:tmuxtabinfo.zsh, hook-load:"tmuxtabinfo"
 zplug "Tarrasch/zsh-autoenv"
 
@@ -413,28 +412,14 @@ fi
 # Then, source plugins and add commands to $PATH
 zplug load
 
-if which git_super_status &> /dev/null; then
-    # 上の条件に合致した時 RPROMPT を git_super_status を使ったもので上書きする
-    # Customize prompt
-    ZSH_THEME_GIT_PROMPT_PREFIX="("
-    ZSH_THEME_GIT_PROMPT_SUFFIX=")"
-    ZSH_THEME_GIT_PROMPT_SEPARATOR="|"
-    ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg[blue]%}"
-    ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[red]%}%{o%G%}"
-    ZSH_THEME_GIT_PROMPT_CONFLICTS="%{$fg[red]%}%{x%G%}"
-    ZSH_THEME_GIT_PROMPT_CHANGED="%{$fg[blue]%}%{+%G%}"
-    ZSH_THEME_GIT_PROMPT_BEHIND="%{-%G%}"
-    ZSH_THEME_GIT_PROMPT_AHEAD="%{+%G%}"
-    ZSH_THEME_GIT_PROMPT_UNTRACKED="%{=%G%}"
-    ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[green]%}%{o%G%}"
-    RPROMPT=' $(git_super_status)'
-fi
 autoload -U colors; colors      # ${fg[...]} や $reset_color をロード
 setopt prompt_subst             # プロンプトが表示されるたびにプロンプト文字列を評価、置換する
 
 prompt_pwd='%{[32m%}%~%b%{[m%}'
 PROMPT='%{[32m%}${WINDOW:+"$WINDOW:"}%n@%B%m%b(%?)%{[m%}%B%#%b '
 
+
+### 以下自前でRPROMPTを2行に分けたような感じにしていたときの名残
 function unescapesequence() {
     echo "$1" | sed -e 's/%{//g;s/%}//g;s/[^]*//g;'
 }
@@ -444,12 +429,22 @@ function right_aligned_print() {
     padwidth=$(($COLUMNS - $len))
     print -P ${(r:$padwidth:: :)}$str
 }
-precmd () {
-    wd=`echo $PWD | sed -e "s%^$HOME%~%"`
-    right_aligned_print "[%{[32m%}$wd%{[m%}]"
+# precmd () {
+#     wd=`echo $PWD | sed -e "s%^$HOME%~%"`
+#     right_aligned_print "[%{[32m%}$wd%{[m%}]"
+# }
+### 名残以上
+
+function git_show_branch_for_prompt() {
+    branch=`git branch --show-current 2>/dev/null`
+    if [ "$?" = "0" ] ; then
+        branch="[$branch]"
+    else
+        branch=''
+    fi
+    echo $branch
 }
-
-
+export RPROMPT="$(git_show_branch_for_prompt)[%{${fg[green]}%}%~%{${reset_color}%}]"
 
 export PATH="/usr/local/opt/imagemagick@6/bin:$PATH"
 
