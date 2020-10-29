@@ -146,6 +146,9 @@ alias rcreload='source ~/.zshrc'
 alias wgett='wget --content-disposition'
 alias cdg='cd `git rev-parse --show-toplevel`'
 
+# ~~ でproject rootのパスに置き換わる未完成
+bindkey -s '~~' '$(git rev-parse --show-toplevel)\t'
+
 function mkdirr {
     mkdir -p $*
     cd $*
