@@ -436,7 +436,7 @@ prompt_pwd='%{[32m%}%~%b%{[m%}'
 PROMPT='%{[32m%}${WINDOW:+"$WINDOW:"}%n@%B%m%b(%?)%{[m%}%B%#%b '
 
 function unescapesequence() {
-    echo "$1" | sed -e "s/%{/\t/g;s/%}/\g/g;s/\t[^\t\g]*\g//g;"
+    echo "$1" | sed -e 's/%{//g;s/%}//g;s/[^]*//g;'
 }
 function right_aligned_print() {
     str=$1
