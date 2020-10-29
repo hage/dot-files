@@ -485,5 +485,5 @@ if [ -e /usr/local/opt/icu4c/bin ]; then
     export PKG_CONFIG_PATH="/usr/local/opt/icu4c/lib/pkgconfig"
 fi
 
-export EDITOR=cot
+export EDITOR='cot -w'
 eval "$(direnv hook zsh)"
