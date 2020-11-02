@@ -321,7 +321,7 @@ function indent2(){ a='(progn (let ((buf (generate-new-buffer "a"))) (with-curre
 
 
 ################ peco
-FZF_COMMAND=fzf-tmux
+FZF_COMMAND=fzf
 
 if which $FZF_COMMAND > /dev/null
 then
