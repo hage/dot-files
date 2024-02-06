@@ -124,6 +124,8 @@ alias ll='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
 
+alias emacsclient='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient'
+
 
 # alias www='w3m -X'
 # alias wwv='w3m -X -T text/html'
@@ -134,6 +136,7 @@ alias lla='ls -la'
 # alias jless='w3m -X'
 # alias em='open -a emacs'
 alias ebc='emacs -batch -f batch-byte-compile'
+alias el='emacs -q --load ~/.emacs.d/n/init.el'
 alias -g L='|less'
 alias -g G='|grep'
 alias gd='dirs -v; echo -n "select number: "; read newdir; cd +"$newdir"'
@@ -287,8 +290,7 @@ fi
 
 # rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)" ; fi
-# bundle exec を不要に http://qiita.com/ymmtmdk/items/374d5319e8d5c9ab2ff4
-# export RUBYGEMS_GEMDEPS=-
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
 
 stty -ixon
 
@@ -355,7 +357,7 @@ then
 
     export FZF_DEFAULT_OPTS='--height 40% --reverse -e --bind=ctrl-k:kill-line,ctrl-v:page-down,alt-v:page-up --color=dark,hl:202'
     export FZF_TMUX=1
-    alias fzf=$FZF_COMMAND
+    alias fzf="LANG=C RUNEWIDTH_EASTASIAN=1 $FZF_COMMAND"
     [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
     ################ Docker
@@ -451,12 +453,6 @@ export PATH="/usr/local/opt/imagemagick@6/bin:$PATH"
 autoload -U compinit
 compinit
 
-# see 'brew info php@7.1'
-export PATH="/usr/local/opt/php@7.1/bin:$PATH"
-export PATH="/usr/local/opt/php@7.1/sbin:$PATH"
-
-export PATH="/usr/local/opt/mysql-client/bin:$PATH"
-
 
 # ncurses
 export PATH="/usr/local/opt/ncurses/bin:$PATH"
@@ -483,3 +479,9 @@ fi
 export EDITOR='cot -w'
 eval "$(direnv hook zsh)"
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=1
+
+# # openssl
+# export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
+# export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
+# export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
+# export PKG_CONFIG_PATH="/usr/local/opt/openssl@1.1/lib/pkgconfig"

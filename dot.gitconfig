@@ -36,3 +36,5 @@
 	ff = only
 [http]
 	postBuffer = 4M
+[init]
+	defaultBranch = main
