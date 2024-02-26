@@ -355,7 +355,7 @@ then
     zle -N fzf-cdr
     bindkey '^x' fzf-cdr
 
-    export FZF_DEFAULT_OPTS='--height 40% --reverse -e --bind=ctrl-k:kill-line,ctrl-v:page-down,alt-v:page-up --color=dark,hl:202'
+    export FZF_DEFAULT_OPTS='--height 40% --reverse -e --bind=ctrl-k:kill-line,ctrl-v:page-down,alt-v:page-up --color=dark,hl:202 --border=none'
     export FZF_TMUX=1
     alias fzf="LANG=C RUNEWIDTH_EASTASIAN=1 $FZF_COMMAND"
     [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
