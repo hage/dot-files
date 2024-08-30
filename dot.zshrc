@@ -329,6 +329,8 @@ FZF_COMMAND=fzf
 
 if which $FZF_COMMAND > /dev/null
 then
+    source <(fzf --zsh)
+
     ################ history
     function select-history() {
         BUFFER=$(history -n -r 1 | fzf --no-sort +m --query "$LBUFFER" --prompt="History > ")
