@@ -9,6 +9,8 @@
 #     eval `tset -s xterm-256color`
 # fi
 
+export HOMEBREW_PREFIX="$(brew --prefix)"
+
 if [ "$IN_LOGIN" = "true" ]; then
     unset IN_LOGIN
 else
@@ -19,7 +21,7 @@ export GUARD_GEM_SILENCE_DEPRECATIONS=1
 
 case ${OSTYPE} in
     darwin*)
-        fpath=(/usr/local/share/zsh/functions ${fpath})
+        fpath=(${HOMEBREW_PREFIX}/share/zsh/functions ${fpath})
         ;;
 esac
 
@@ -124,7 +126,7 @@ alias ll='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
 
-alias emacsclient='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient'
+alias emacsclient='/Applications/Emacs.app/Contents/MacOS/bin-arm64-11/emacsclient'
 
 
 # alias www='w3m -X'
@@ -172,8 +174,8 @@ alias update-sync-link="chmod 755 $link_dropbox_dot_files_command && $link_dropb
 # jman <数字> だとマニュアルの section <数字> から補完
 compdef _man jman
 
-if [ -d /usr/local/opt/erlang/lib/erlang/man ]; then
-    MANPATH=$MANPATH:/usr/local/opt/erlang/lib/erlang/man
+if [ -d ${HOMEBREW_PREFIX}/opt/erlang/lib/erlang/man ]; then
+    MANPATH=$MANPATH:${HOMEBREW_PREFIX}/opt/erlang/lib/erlang/man
 fi
 
 if [ "$TERM" = "emacs" ]; then
@@ -373,7 +375,7 @@ export DIRECTRY_ALIAS_FILE=~/.directory_alias
 [ -f $DIRECTRY_ALIAS_FILE ] && source $DIRECTRY_ALIAS_FILE
 
 ################ zplug
-export ZPLUG_HOME=/usr/local/opt/zplug
+export ZPLUG_HOME="$HOMEBREW_PREFIX/opt/zplug"
 source $ZPLUG_HOME/init.zsh
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
@@ -399,7 +401,7 @@ zplug "Tarrasch/zsh-autoenv"
 # notify
 zplug "marzocchi/zsh-notify"
 zstyle ':notify:*' command-complete-timeout 10
-zstyle ':notify:*' notifier /usr/local/bin/terminal-notifier
+zstyle ':notify:*' notifier ${HOMEBREW_PREFIX}/bin/terminal-notifier
 
 # cd
 zplug "changyuheng/zsh-interactive-cd"
@@ -448,17 +450,23 @@ function git_show_branch_for_prompt() {
 }
 export RPROMPT="$(git_show_branch_for_prompt)[%{${fg[green]}%}%~%{${reset_color}%}]"
 
-export PATH="/usr/local/opt/imagemagick@6/bin:$PATH"
+export PATH="${HOMEBREW_PREFIX}/opt/imagemagick@6/bin:$PATH"
 
 autoload -U compinit
 compinit
 
 
-# ncurses
-export PATH="/usr/local/opt/ncurses/bin:$PATH"
-export LDFLAGS="-L/usr/local/opt/ncurses/lib"
-export CPPFLAGS="-I/usr/local/opt/ncurses/include"
-export PKG_CONFIG_PATH="/usr/local/opt/ncurses/lib/pkgconfig"
+
+# export PATH="${HOMEBREW_PREFIX}/bin:$PATH" # .zshenvで設定済み
+export LDFLAGS="-L${HOMEBREW_PREFIX}/lib"
+export CPPFLAGS="-I${HOMEBREW_PREFIX}/include"
+export PKG_CONFIG_PATH="${HOMEBREW_PREFIX}/pkgconfig"
+
+# # ncurses
+# export PATH="${HOMEBREW_PREFIX}/opt/ncurses/bin:$PATH"
+# export LDFLAGS="-L${HOMEBREW_PREFIX}/opt/ncurses/lib"
+# export CPPFLAGS="-I${HOMEBREW_PREFIX}/opt/ncurses/include"
+# export PKG_CONFIG_PATH="${HOMEBREW_PREFIX}/opt/ncurses/lib/pkgconfig"
 
 # IEx
 export ERL_AFLAGS="-kernel shell_history enabled"
@@ -468,20 +476,20 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 
 
 # icu4c
-if [ -e /usr/local/opt/icu4c/bin ]; then
-    export PATH="/usr/local/opt/icu4c/bin:$PATH"
-    export PATH="/usr/local/opt/icu4c/sbin:$PATH"
-    export LDFLAGS="-L/usr/local/opt/icu4c/lib"
-    export CPPFLAGS="-I/usr/local/opt/icu4c/include"
-    export PKG_CONFIG_PATH="/usr/local/opt/icu4c/lib/pkgconfig"
-fi
+# if [ -e ${HOMEBREW_PREFIX}/opt/icu4c/bin ]; then
+#     export PATH="${HOMEBREW_PREFIX}/opt/icu4c/bin:$PATH"
+#     export PATH="${HOMEBREW_PREFIX}/opt/icu4c/sbin:$PATH"
+#     export LDFLAGS="-L${HOMEBREW_PREFIX}/opt/icu4c/lib"
+#     export CPPFLAGS="-I${HOMEBREW_PREFIX}/opt/icu4c/include"
+#     export PKG_CONFIG_PATH="${HOMEBREW_PREFIX}/opt/icu4c/lib/pkgconfig"
+# fi
 
 export EDITOR='cot -w'
 eval "$(direnv hook zsh)"
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=1
 
 # # openssl
-# export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
-# export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
-# export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
-# export PKG_CONFIG_PATH="/usr/local/opt/openssl@1.1/lib/pkgconfig"
+# export PATH="${HOMEBREW_PREFIX}/opt/openssl@1.1/bin:$PATH"
+# export LDFLAGS="-L${HOMEBREW_PREFIX}/opt/openssl@1.1/lib"
+# export CPPFLAGS="-I${HOMEBREW_PREFIX}/opt/openssl@1.1/include"
+# export PKG_CONFIG_PATH="${HOMEBREW_PREFIX}/opt/openssl@1.1/lib/pkgconfig"
