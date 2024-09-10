@@ -389,7 +389,7 @@ zplug "mafredri/zsh-async"
 # 構文のハイライト(https://github.com/zsh-users/zsh-syntax-highlighting)
 zplug "zsh-users/zsh-syntax-highlighting"
 # history関係
-zplug "zsh-users/zsh-history-substring-search"
+zplug "zsh-users/zsh-history-substring-search", as:plugin
 # タイプ補完
 
 # zplug "zsh-users/zsh-autosuggestions"
