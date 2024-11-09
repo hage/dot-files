@@ -123,7 +123,7 @@ alias ll='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
 
-alias emacsclient='/Applications/Emacs.app/Contents/MacOS/bin-arm64-11/emacsclient'
+alias emacsclient='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient'
 
 
 # alias www='w3m -X'
@@ -484,7 +484,7 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 #     export PKG_CONFIG_PATH="${HOMEBREW_PREFIX}/opt/icu4c/lib/pkgconfig"
 # fi
 
-export EDITOR='cot -w'
+export EDITOR="emacsclient"
 eval "$(direnv hook zsh)"
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=1
 
