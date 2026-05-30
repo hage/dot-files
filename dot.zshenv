@@ -18,9 +18,13 @@ typeset -x -T OMAKEPATH omakepath
 typeset -U path cdpath fpath manpath omakepath
 
 # PATH
+if type "brew" > /dev/null 2>&1; then
+    export HOMEBREW_PREFIX="$(brew --prefix)"
+fi
+
 if [ `uname` = "Darwin" ]; then
-    path=(/usr/local/sbin(N-/) ~/bin(N-/) ~/.rbenv/shims(N-/) ~/opt//bin(N-/) /usr/local/bin(N-/) /opt/homebrew/sbin(N-/) /opt/homebrew/bin(N-/) /usr/local/texlive/2024basic/bin/universal-darwin(N-/) ${path})
-    manpath=(/usr/local/share/man(N-/) /usr/local/opt/erlang/lib/erlang/man(N-/) /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/share/man(N-/) /Library/Developer/CommandLineTools/usr/share/man(N-/) ${manpath})
+    path=(${HOMEBREW_PREFIX}/opt/imagemagick@6/bin(N-/) /opt/homebrew/sbin(N-/) /usr/local/sbin(N-/) /usr/sbin(N-/) /sbin(N-/)  /opt/homebrew/bin(N-/) /usr/local/bin(N-/) /usr/bin(N-/) /bin(N-/) ~/bin(N-/) ~/.rbenv/shims(N-/) /usr/local/texlive/2026basic/bin/universal-darwin(N-/) ${path})
+    manpath=(/usr/local/share/man(N-/) /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/share/man(N-/) /Library/Developer/CommandLineTools/usr/share/man(N-/) ${manpath} ${HOMEBREW_PREFIX}/opt/erlang/lib/erlang/man)
     export MANPATH
 fi
 

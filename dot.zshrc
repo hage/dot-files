@@ -9,7 +9,7 @@
 #     eval `tset -s xterm-256color`
 # fi
 
-export HOMEBREW_PREFIX="$(brew --prefix)"
+source ~/.zshenv
 
 if [ "$IN_LOGIN" = "true" ]; then
     unset IN_LOGIN
@@ -186,8 +186,6 @@ export LS_COLORS
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
 export LSCOLORS=dxfxcxdxgxegedabagacad
-
-export LANG=ja_JP.UTF-8
 
 function tmux-remake-socket () {
     if [ ! $TMUX ]; then
@@ -450,14 +448,9 @@ function git_show_branch_for_prompt() {
 }
 export RPROMPT="$(git_show_branch_for_prompt)[%{${fg[green]}%}%~%{${reset_color}%}]"
 
-export PATH="${HOMEBREW_PREFIX}/opt/imagemagick@6/bin:$PATH"
-
 autoload -U compinit
 compinit
 
-
-
-# export PATH="${HOMEBREW_PREFIX}/bin:$PATH" # .zshenvで設定済み
 export LDFLAGS="-L${HOMEBREW_PREFIX}/lib"
 export CPPFLAGS="-I${HOMEBREW_PREFIX}/include"
 export PKG_CONFIG_PATH="${HOMEBREW_PREFIX}/pkgconfig"
