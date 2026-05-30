@@ -294,7 +294,7 @@ stty -ixon
 # docker
 alias d=docker
 alias dm=docker-machine
-alias doc=docker-compose
+alias doc="docker compose"
 function de() {
     eval "$(docker-machine env 2> /dev/null)"
 }
