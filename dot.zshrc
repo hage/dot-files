@@ -486,3 +486,9 @@ export GIT_DISCOVERY_ACROSS_FILESYSTEM=1
 # export LDFLAGS="-L${HOMEBREW_PREFIX}/opt/openssl@1.1/lib"
 # export CPPFLAGS="-I${HOMEBREW_PREFIX}/opt/openssl@1.1/include"
 # export PKG_CONFIG_PATH="${HOMEBREW_PREFIX}/opt/openssl@1.1/lib/pkgconfig"
+
+# gemini-cli
+# % security add-generic-password -a "gemini_cli_user" -s "Gemini_CLI_API_Key" -w "ここに実際のAPIキーを入力"
+# でmacOSのキーチェーンにパスワードを保存する
+# ~/.zshrc に追記
+export GEMINI_API_KEY=$(security find-generic-password -a "gemini_cli_user" -s "Gemini_CLI_API_Key" -w 2>/dev/null)
