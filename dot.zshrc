@@ -104,6 +104,35 @@ bindkey -e
 bindkey '^P' up-line-or-history
 bindkey '^N' down-line-or-history
 
+# ==============================================================================
+# Ghostty / CSI-u (fixterms) 拡張キーバインド修復設定
+# ==============================================================================
+if [ "$TERM_PROGRAM" = "ghostty" ]; then
+    # Ctrl + I (Tab) の修復 - 補完を実行
+    # bindkey '^[[105;5u' expand-or-complete
+    bindkey '^[[105;5u' fzf-tab-complete
+    # Ctrl + H (Backspace) の修復 - 1文字削除
+    bindkey '^[[104;5u' backward-delete-char
+    # Ctrl + M (Enter) の修復 - コマンド実行
+    bindkey '^[[109;5u' accept-line
+    # Ctrl + [ (Escape) の修復 - コマンドラインのクリアまたはViモード移行
+    bindkey '^[[91;5u'  vi-cmd-mode
+    # Ctrl + A の修復 - 行頭へ移動
+    bindkey '^[[97;5u'  beginning-of-line
+    # Ctrl + E の修復 - 行末へ移動
+    bindkey '^[[101;5u' end-of-line
+    # Ctrl + K の修復 - カーソル以降を削除
+    bindkey '^[[107;5u' kill-line
+    # Ctrl + U の修復 - 行全体を削除
+    bindkey '^[[117;5u' kill-whole-line
+    # Ctrl + W の修復 - 直前の1単語を削除
+    bindkey '^[[119;5u' backward-kill-word
+    # Ctrl + R の修復 - 履歴の逆方向検索
+    bindkey '^[[114;5u' history-incremental-search-backward
+    # Ctrl + Z の修復 - プロセスをバックグラウンドに送る
+    bindkey '^[[122;5u' susp
+fi
+
 # pager
 PAGER=/usr/bin/less; export PAGER
 export LESS='-RMiXgj.3'
@@ -411,6 +440,9 @@ if ! zplug check --verbose; then
     echo; zplug install
   fi
 fi
+
+zplug "aloxaf/fzf-tab", defer:2
+
 # Then, source plugins and add commands to $PATH
 zplug load
 
@@ -454,6 +486,34 @@ compinit
 export LDFLAGS="-L${HOMEBREW_PREFIX}/lib"
 export CPPFLAGS="-I${HOMEBREW_PREFIX}/include"
 export PKG_CONFIG_PATH="${HOMEBREW_PREFIX}/pkgconfig"
+
+
+# #### fzf-tabの設定：補完メニューの有効化
+# zstyle ':completion:*' menu yes select
+# zstyle ':completion:*' completer _expand _complete _ignored _files
+# fzf-tabの見た目カスタマイズ
+export FZF_TAB_COMMAND_OPTS='--height 40% --layout=reverse --border'
+
+# disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
+# set descriptions format to enable group support
+# NOTE: don't use escape sequences (like '%F{red}%d%f') here, fzf-tab will ignore them
+zstyle ':completion:*:descriptions' format '[%d]'
+# set list-colors to enable filename colorizing
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
+zstyle ':completion:*' menu no
+# preview directory's content with eza when completing cd
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+# custom fzf flags
+# NOTE: fzf-tab does not follow FZF_DEFAULT_OPTS by default
+zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 --bind=tab:accept
+# To make fzf-tab follow FZF_DEFAULT_OPTS.
+# NOTE: This may lead to unexpected behavior since some flags break this plugin. See Aloxaf/fzf-tab#455.
+zstyle ':fzf-tab:*' use-fzf-default-opts yes
+# switch group using `<` and `>`
+zstyle ':fzf-tab:*' switch-group '<' '>'
+
 
 # # ncurses
 # export PATH="${HOMEBREW_PREFIX}/opt/ncurses/bin:$PATH"
